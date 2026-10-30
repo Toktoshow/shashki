@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Партии — Шашки{% endblock %}
+{% block content %}
+<div class="lobby">
+  <section class="card">
+    <h2>Новая партия</h2>
+    <form method="post" action="{% url 'new_game' %}" class="stack">
+      {% csrf_token %}
+      <fieldset class="choice">
+        <legend>Соперник</legend>
+        <label><input type="radio" name="mode" value="computer" checked> Компьютер</label>
+        <label><input type="radio" name="mode" value="online"> Другой игрок</label>
+      </fieldset>
+      <div class="field">
+        <label for="color">Ваш цвет</label>
+        <select name="color" id="color">
+          <option value="w">Белые (ходят первыми)</option>
+          <option value="b">Чёрные</option>
+          <option value="random">Случайно</option>
+        </select>
+      </div>
+      <button type="submit" class="btn primary">Начать партию</button>
+    </form>
+    <p class="help">Для игры вдвоём создайте партию с «другим игроком» — соперник увидит её в списке открытых партий.</p>
+  </section>
+
+  <section class="card">
+    <h2>Мои партии</h2>
+    {% if my_games %}
+      <ul class="games">
+        {% for g in my_games %}
+          <li>
+            <div>
+              <strong>{{ g.white_name }}</strong> и <strong>{{ g.black_name }}</strong>
+              <div class="meta">
+                {% if g.status == "waiting" %}ждёт соперника
+                {% elif g.my_turn %}<span class="tag turn">ваш ход</span>
+                {% else %}ход соперника{% endif %}
+                {% if g.vs_computer %}· с компьютером{% endif %}
+              </div>
+            </div>
+            <div class="row-actions">
+              <a class="btn" href="{% url 'game' g.pk %}">Открыть</a>
+              {% if g.status == "waiting" %}
+                <form method="post" action="{% url 'cancel_game' g.pk %}" class="inline">
+                  {% csrf_token %}<button type="submit" class="btn ghost">Отменить</button>
+                </form>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty">Активных партий нет. Начните новую слева.</p>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <h2>Открытые партии</h2>
+    {% if open_games %}
+      <ul class="games">
+        {% for g in open_games %}
+          <li>
+            <div>
+              Создал(а) <strong>{% if g.white %}{{ g.white_name }}{% else %}{{ g.black_name }}{% endif %}</strong>
+              <div class="meta">играет {% if g.white %}белыми{% else %}чёрными{% endif %} — вы будете {% if g.white %}чёрными{% else %}белыми{% endif %}</div>
+            </div>
+            <form method="post" action="{% url 'join_game' g.pk %}" class="inline">
+              {% csrf_token %}<button type="submit" class="btn primary">Играть</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty">Сейчас никто не ищет соперника.</p>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <h2>Недавние результаты</h2>
+    {% if finished_games %}
+      <ul class="games">
+        {% for g in finished_games %}
+          <li>
+            <div>
+              <strong>{{ g.white_name }}</strong> и <strong>{{ g.black_name }}</strong>
+              <div class="meta">{{ g.result_label }}</div>
+            </div>
+            <a class="btn ghost" href="{% url 'game' g.pk %}">Посмотреть</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty">Здесь появятся сыгранные партии.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

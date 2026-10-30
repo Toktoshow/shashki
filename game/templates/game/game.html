@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Партия №{{ game.pk }} — Шашки{% endblock %}
+{% block content %}
+<div id="game-app" class="game"
+     data-state-url="{% url 'api_state' game.pk %}"
+     data-move-url="{% url 'api_move' game.pk %}"
+     data-resign-url="{% url 'api_resign' game.pk %}"
+     data-csrf="{{ csrf_token }}">
+
+  <section class="board-wrap">
+    <div id="board" class="board" role="group" aria-label="Шашечная доска"></div>
+  </section>
+
+  <aside class="panel">
+    <div id="player-top" class="player"></div>
+    <div class="status" id="status" role="status" aria-live="polite">Загрузка…</div>
+    <p class="error-line" id="error-line" role="alert"></p>
+    <div id="player-bottom" class="player"></div>
+
+    <div class="panel-actions">
+      {% if game.status == "waiting" and not my_color %}
+        <form method="post" action="{% url 'join_game' game.pk %}" class="inline">
+          {% csrf_token %}<button type="submit" class="btn primary">Присоединиться к партии</button>
+        </form>
+      {% endif %}
+      <button type="button" id="resign-btn" class="btn ghost" hidden>Сдаться</button>
+      <a class="btn ghost" href="{% url 'lobby' %}">К списку партий</a>
+    </div>
+
+    <details class="history" open>
+      <summary>Записанные ходы</summary>
+      <ol id="history" class="history-list"></ol>
+    </details>
+  </aside>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{% static 'game/game.js' %}"></script>{% endblock %}

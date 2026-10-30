@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Рейтинг — Шашки{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Рейтинг игроков</h1>
+  {% if players %}
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>#</th><th>Игрок</th><th>Партий</th><th>Побед</th><th>Поражений</th><th>Ничьих</th></tr>
+        </thead>
+        <tbody>
+          {% for p in players %}
+            <tr{% if p == user %} class="me"{% endif %}>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ p.get_username }}</td>
+              <td>{{ p.played }}</td>
+              <td>{{ p.wins }}</td>
+              <td>{{ p.losses }}</td>
+              <td>{{ p.draws }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="empty">Пока нет завершённых партий. Сыграйте первую!</p>
+  {% endif %}
+</section>
+{% endblock %}

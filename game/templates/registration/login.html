@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Вход — Шашки{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Вход</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% include "game/_form_fields.html" %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn primary">Войти</button>
+  </form>
+  <p class="aside">Ещё нет имени игрока? <a href="{% url 'register' %}">Зарегистрируйтесь</a>.</p>
+</section>
+{% endblock %}

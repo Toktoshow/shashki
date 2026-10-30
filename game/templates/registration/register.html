@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Регистрация — Шашки{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Регистрация</h1>
+  <p class="lead">Выберите имя игрока — оно будет видно сопернику и в рейтинге.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include "game/_form_fields.html" %}
+    <button type="submit" class="btn primary">Создать аккаунт</button>
+  </form>
+  <p class="aside">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>.</p>
+</section>
+{% endblock %}

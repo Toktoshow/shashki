@@ -1,0 +1,257 @@
+:root {
+  --page: #e8edeb;
+  --ink: #17262a;
+  --ink-soft: #4d6065;
+  --card: #f7f9f8;
+  --line: #c9d4d1;
+  --frame: #1f3f43;
+  --sq-light: #d6e3e0;
+  --sq-dark: #2f6f73;
+  --accent: #f0a92e;
+  --accent-ink: #5a3a00;
+  --good: #1f7a4d;
+  --bad: #a33a2c;
+  --piece-white: #fbfaf5;
+  --piece-black: #1a2124;
+  --heading: "Rockwell", "Roboto Slab", "Bitter", Georgia, serif;
+  --body: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #11191b;
+    --ink: #e4ecea;
+    --ink-soft: #9db0ad;
+    --card: #182326;
+    --line: #2b3b3e;
+    --frame: #0b1415;
+    --sq-light: #c7d6d3;
+    --sq-dark: #2a6569;
+    --accent-ink: #f6d9a1;
+  }
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 16px/1.5 var(--body);
+}
+a { color: inherit; }
+h1, h2 { font-family: var(--heading); margin: 0 0 .6rem; line-height: 1.2; }
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.25rem; }
+
+/* ---------- шапка ---------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .7rem clamp(1rem, 4vw, 2.5rem);
+  background: var(--frame); color: #eaf2f0;
+}
+.brand {
+  display: flex; align-items: center; gap: .6rem;
+  font: 700 1.4rem var(--heading); text-decoration: none; color: inherit;
+}
+.brand-mark {
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #e8e4d6 55%, #bdb7a3);
+  box-shadow: 0 0 0 3px #2f6f73, 0 0 0 5px #eaf2f0;
+}
+.nav { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; font-size: .95rem; }
+.nav a { text-decoration: none; opacity: .9; }
+.nav a:hover { opacity: 1; text-decoration: underline; }
+.who { padding: .15rem .6rem; border-radius: 999px; background: rgba(255,255,255,.12); }
+.inline { display: inline; margin: 0; }
+.link-btn { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 0; opacity: .9; }
+.link-btn:hover { opacity: 1; text-decoration: underline; }
+
+/* ---------- страница и карточки ---------- */
+.page { max-width: 1120px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 2rem) 3rem; }
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 10px; padding: 1.25rem 1.4rem;
+}
+.card.narrow { max-width: 440px; margin: 2rem auto; }
+.lead, .aside, .help, .empty, .meta { color: var(--ink-soft); }
+.help { font-size: .85rem; margin: .5rem 0 0; }
+.aside { margin-top: 1rem; font-size: .95rem; }
+.empty { margin: .25rem 0; }
+
+.messages { list-style: none; margin: 0 0 1rem; padding: 0; }
+.msg { padding: .6rem .9rem; border-radius: 8px; background: var(--card); border: 1px solid var(--line); margin-bottom: .5rem; }
+.msg.success { border-color: var(--good); }
+.msg.error { border-color: var(--bad); }
+
+/* ---------- формы и кнопки ---------- */
+.field { margin-bottom: 1rem; }
+.field label, .choice legend { display: block; font-weight: 600; margin-bottom: .3rem; }
+.field input, .field select {
+  width: 100%; padding: .6rem .7rem; font: inherit; color: inherit;
+  background: var(--page); border: 1px solid var(--line); border-radius: 8px;
+}
+.field input:focus-visible, .field select:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.err { color: var(--bad); font-size: .9rem; margin-top: .25rem; }
+.err ul, .help ul { margin: .25rem 0 0; padding-left: 1.2rem; }
+.choice { border: 0; padding: 0; margin: 0 0 1rem; }
+.choice label { display: inline-flex; align-items: center; gap: .4rem; margin-right: 1.2rem; }
+
+.btn {
+  display: inline-block; padding: .55rem 1.05rem; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: 600 .95rem var(--body); text-decoration: none; cursor: pointer;
+}
+.btn:hover { border-color: var(--sq-dark); }
+.btn:focus-visible, .cell:focus-visible, .link-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.btn.primary { background: var(--sq-dark); border-color: var(--sq-dark); color: #fff; }
+.btn.primary:hover { filter: brightness(1.1); }
+.btn.ghost { background: transparent; }
+
+/* ---------- лобби ---------- */
+.lobby { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+.games { list-style: none; margin: 0; padding: 0; }
+.games li {
+  display: flex; justify-content: space-between; align-items: center; gap: .75rem;
+  padding: .7rem 0; border-top: 1px solid var(--line);
+}
+.games li:first-child { border-top: 0; padding-top: .2rem; }
+.row-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+.meta { font-size: .88rem; }
+.tag.turn { background: var(--accent); color: #2b1c00; padding: .05rem .5rem; border-radius: 999px; font-weight: 700; }
+
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: .55rem .7rem; text-align: left; border-bottom: 1px solid var(--line); }
+.table th { font-weight: 600; color: var(--ink-soft); }
+.table tr.me td { background: color-mix(in srgb, var(--accent) 22%, transparent); font-weight: 600; }
+
+/* ---------- партия ---------- */
+.game { display: grid; grid-template-columns: minmax(0, 640px) minmax(260px, 1fr); gap: 1.75rem; align-items: start; }
+.board {
+  display: grid; grid-template-columns: repeat(8, 1fr);
+  width: 100%; aspect-ratio: 1;
+  border: 10px solid var(--frame); border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(10, 30, 32, .25);
+}
+.cell {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  padding: 0; border: 0; margin: 0; background: var(--sq-light); cursor: default; font: inherit;
+}
+.cell.dark { background: var(--sq-dark); }
+.cell.last { background-image: linear-gradient(rgba(240,169,46,.32), rgba(240,169,46,.32)); }
+.cell.movable, .cell.target { cursor: pointer; }
+.cell.picked { box-shadow: inset 0 0 0 4px var(--accent); }
+.cell.target::after {
+  content: ""; position: absolute; width: 28%; height: 28%; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 4px rgba(240,169,46,.35);
+}
+.coord { position: absolute; font-size: .65rem; font-weight: 700; pointer-events: none; opacity: .75; }
+.coord.file { right: 4px; bottom: 2px; }
+.coord.rank { left: 4px; top: 2px; }
+.cell.dark .coord { color: var(--sq-light); }
+.cell.light .coord { color: var(--sq-dark); }
+
+.piece {
+  position: relative; width: 78%; height: 78%; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.piece::before {
+  content: ""; position: absolute; inset: 17%; border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, .16);
+}
+.piece.white {
+  background: radial-gradient(circle at 35% 30%, #ffffff 0, var(--piece-white) 40%, #d9d4c4 100%);
+  box-shadow: 0 3px 0 #a7a190, 0 6px 8px rgba(0, 0, 0, .35);
+  color: #8a6a1c;
+}
+.piece.black {
+  background: radial-gradient(circle at 35% 30%, #4a565b 0, var(--piece-black) 55%, #0c1113 100%);
+  box-shadow: 0 3px 0 #05090a, 0 6px 8px rgba(0, 0, 0, .45);
+  color: #f0c660;
+}
+.piece.black::before { border-color: rgba(255, 255, 255, .18); }
+.piece.king::after { content: "♛"; position: relative; font-size: clamp(1rem, 4.2vw, 2rem); line-height: 1; }
+.cell.movable .piece { box-shadow: 0 0 0 3px var(--accent), 0 6px 8px rgba(0, 0, 0, .35); }
+
+.panel { display: flex; flex-direction: column; gap: .9rem; }
+.player {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+}
+.player.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(240,169,46,.3); }
+.player .dot { width: 1.4rem; height: 1.4rem; border-radius: 50%; flex-shrink: 0; }
+.player .dot.white { background: var(--piece-white); border: 2px solid #9a947f; }
+.player .dot.black { background: var(--piece-black); border: 2px solid #000; }
+.player .name { font-weight: 700; flex: 1; overflow-wrap: anywhere; }
+.player .count { color: var(--ink-soft); font-size: .9rem; white-space: nowrap; }
+.status { font: 700 1.2rem var(--heading); padding: .2rem .2rem; }
+.status.done { color: var(--accent-ink); }
+.error-line { color: var(--bad); margin: 0; min-height: 1.4em; font-size: .92rem; }
+.panel-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.history { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: .6rem .9rem; }
+.history summary { cursor: pointer; font-weight: 600; }
+.history-list {
+  list-style: none; margin: .6rem 0 0; padding: 0; max-height: 220px; overflow-y: auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: .15rem .8rem; font-variant-numeric: tabular-nums;
+}
+.history-list li { font-size: .92rem; }
+.history-list .n { color: var(--ink-soft); margin-right: .35rem; }
+
+@media (max-width: 880px) {
+  .lobby { grid-template-columns: 1fr; }
+  .game { grid-template-columns: 1fr; }
+  .board { border-width: 6px; }
+}
+
+/* ---------- анимации ---------- */
+/* Используются отдельные свойства translate и scale, чтобы несколько анимаций
+   одной шашки (скольжение + превращение) не мешали друг другу. */
+
+/* шашка скользит с прежней клетки на новую (1 клетка = 128.2% от размера шашки) */
+@keyframes piece-slide {
+  from { translate: calc(var(--dx, 0) * 128.2%) calc(var(--dy, 0) * 128.2%); }
+  to   { translate: 0 0; }
+}
+.piece.slide {
+  z-index: 5;
+  animation: piece-slide 320ms cubic-bezier(.3, .7, .3, 1) var(--delay, 0ms) backwards;
+}
+
+/* побитая шашка: короткий «вздох», затем сжимается, крутится и исчезает */
+@keyframes piece-captured {
+  0%   { scale: 1;    opacity: 1; rotate: 0deg; }
+  22%  { scale: 1.2;  opacity: 1; rotate: -8deg; }
+  100% { scale: 0;    opacity: 0; rotate: 220deg; }
+}
+.piece.ghost {
+  position: absolute; inset: 0; margin: auto; z-index: 4; pointer-events: none;
+  animation: piece-captured 560ms ease-in var(--delay, 0ms) both;
+}
+.piece.ghost.king::after { content: "♛"; position: relative; font-size: clamp(1rem, 4.2vw, 2rem); line-height: 1; }
+
+/* превращение в дамку: шашка вырастает, вспыхивает и «оседает» */
+@keyframes piece-promote {
+  0%   { scale: 1;    filter: none; }
+  35%  { scale: 1.55; filter: drop-shadow(0 0 12px #f0a92e) brightness(1.2); }
+  60%  { scale: .86;  filter: drop-shadow(0 0 6px #f0a92e); }
+  80%  { scale: 1.12; filter: none; }
+  100% { scale: 1;    filter: none; }
+}
+@keyframes crown-pop {
+  from { opacity: 0; scale: 0; rotate: -40deg; }
+  70%  { opacity: 1; scale: 1.5; rotate: 8deg; }
+  to   { opacity: 1; scale: 1; rotate: 0deg; }
+}
+.piece.promote { z-index: 6; }
+.piece.slide.promote {
+  animation:
+    piece-slide 320ms cubic-bezier(.3, .7, .3, 1) var(--delay, 0ms) backwards,
+    piece-promote 850ms ease-in-out var(--pdelay, 0ms) backwards;
+}
+.piece.promote::after { animation: crown-pop 600ms ease-out var(--pdelay, 0ms) backwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .piece.slide, .piece.promote, .piece.slide.promote, .piece.promote::after { animation: none; }
+  .piece.ghost { display: none; }
+}

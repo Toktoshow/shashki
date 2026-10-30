@@ -1,0 +1,37 @@
+{% load static %}<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Шашки{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'game/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{% url 'lobby' %}"><span class="brand-mark" aria-hidden="true"></span>Шашки</a>
+    <nav class="nav">
+      {% if user.is_authenticated %}
+        <a href="{% url 'lobby' %}">Партии</a>
+        <a href="{% url 'leaderboard' %}">Рейтинг</a>
+        <span class="who">{{ user.get_username }}</span>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}<button type="submit" class="link-btn">Выйти</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Вход</a>
+        <a href="{% url 'register' %}">Регистрация</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="page">
+    {% if messages %}
+      <ul class="messages">
+        {% for m in messages %}<li class="msg {{ m.tags }}">{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
