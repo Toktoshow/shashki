@@ -1,0 +1,7 @@
+   rootDir: checkers_site
+      services:
+     - type: web
+       name: checkers
+       runtime: python
+       rootDir: checkers_site
+       plan: free
